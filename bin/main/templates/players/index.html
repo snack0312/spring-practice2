@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Jekyll v3.8.6">
+<title>Signin Template · Bootstrap</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.4/examples/sign-in/">
+
+<!-- Bootstrap core CSS -->
+<link href="/docs/4.4/dist/css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" rel="stylesheet"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon"
+	href="/docs/4.4/assets/img/favicons/apple-touch-icon.png"
+	sizes="180x180">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png"
+	sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-16x16.png"
+	sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
+<link rel="mask-icon"
+	href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
+	color="#563d7c">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config"
+	content="/docs/4.4/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">
+
+
+<style>
+.err {
+	color: red;
+}
+
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+<!-- Custom styles for this template -->
+<link href="signin.css" th:href="@{css/signin.css}" rel="stylesheet">
+</head>
+<body class="text-center mauto" style="margin: 0 50px;">
+
+	<form class="form-signin" th:object="${player}" method="post"
+		action="#" th:action="@{/players}" style="max-width: 100%;">
+
+		<div class="form-group">
+			<label for="name">名前</label> <input type="text" class="form-control"
+				name="name" th:value="*{name}" /> <small id="emailHelp"
+				th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="err">空文字は入力しないでください</small>
+		</div>
+
+		<div class="form-group">
+			<label for="team">チーム</label> <input type="text" class="form-control"
+				name="team" th:value="*{team}" /> <small id="emailHelp"
+				th:if="${#fields.hasErrors('team')}" th:errors="*{team}" class="err">空文字は入力しないでください</small>
+		</div>
+
+		<div class="form-group">
+			<label for="position">ポジション</label> <input type="text"
+				class="form-control" name="position" th:value="*{position}" />
+			<!--   <small id="emailHelp" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="err">空文字は入力しないでください</small>-->
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+	<table class="table" style="">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">名前</th>
+				<th scope="col">チーム</th>
+				<th scope="col">ポジション</th>
+				<th scope="col">打率</th>
+				<th scope="col">編集</th>
+				<th scope="col">削除</th>
+			</tr>
+		</thead>
+		<tbody th:if="${players}">
+			<tr th:each="obj : ${players}">
+
+				<td th:text="${obj.id}"></td>
+				<td th:text="${obj.name}"></td>
+				<td th:text="${obj.team}"></td>
+				<td th:text="${obj.position}"></td>
+				<td th:each="status : ${obj.status}" th:text="${status.avg}"></td>
+				<td><a href="#" th:href="@{/players/edit/{id}(id=${obj.id})}"
+					class="btn btn-primary btn-md active" role="button"
+					aria-pressed="true">編集</a></td>
+				<td><a href="#" th:href="@{/players/delete/{id}(id=${obj.id})}"
+					class="btn btn-danger btn-md active" role="button"
+					aria-pressed="true">削除</a></td>
+
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
